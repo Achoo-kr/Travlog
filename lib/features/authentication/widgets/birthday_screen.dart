@@ -15,6 +15,7 @@ class BirthdayScreen extends StatefulWidget {
 class DateScreenState extends State<BirthdayScreen> {
   final TextEditingController _birthdayController = TextEditingController();
   DateTime currentDate = DateTime.now();
+  //initialDate getter
   DateTime get _initialDate =>
       DateTime(currentDate.year - 12, currentDate.month, currentDate.day);
 
@@ -72,8 +73,12 @@ class DateScreenState extends State<BirthdayScreen> {
             ),
             Gaps.v16,
             TextField(
-              enabled: false,
+              enabled: true,
+              readOnly: true,
               controller: _birthdayController,
+              style: const TextStyle(
+                color: Colors.black,
+              ),
             ),
             Gaps.v16,
             GestureDetector(
