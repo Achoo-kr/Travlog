@@ -14,13 +14,14 @@ class BirthdayScreen extends StatefulWidget {
 
 class DateScreenState extends State<BirthdayScreen> {
   final TextEditingController _birthdayController = TextEditingController();
-
-  DateTime initialDate = DateTime.now();
+  DateTime currentDate = DateTime.now();
+  DateTime get _initialDate =>
+      DateTime(currentDate.year - 12, currentDate.month, currentDate.day);
 
   @override
   void initState() {
     super.initState();
-    _setTextFieldDate(initialDate);
+    _setTextFieldDate(_initialDate);
   }
 
   @override
@@ -35,8 +36,8 @@ class DateScreenState extends State<BirthdayScreen> {
     ));
   }
 
-  void _setTextFieldDate(DateTime initialDate) {
-    final textDate = initialDate.toString().split(" ").first;
+  void _setTextFieldDate(DateTime currentDate) {
+    final textDate = currentDate.toString().split(" ").first;
     _birthdayController.value = TextEditingValue(text: textDate);
   }
 
@@ -86,8 +87,8 @@ class DateScreenState extends State<BirthdayScreen> {
         child: SizedBox(
           height: 300,
           child: CupertinoDatePicker(
-            maximumDate: initialDate,
-            initialDateTime: initialDate,
+            maximumDate: _initialDate,
+            initialDateTime: _initialDate,
             mode: CupertinoDatePickerMode.date,
             onDateTimeChanged: _setTextFieldDate,
           ),
