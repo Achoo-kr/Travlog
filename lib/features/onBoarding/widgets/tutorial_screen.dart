@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
 
 enum Direction { right, left }
 
@@ -41,6 +42,15 @@ class _TutorialScreenState extends State<TutorialScreen> {
     }
   }
 
+  void _onEnterAppTap() {
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const MainNavigationScreen(),
+        ), (route) {
+      return false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -56,7 +66,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 children: [
                   Gaps.v80,
                   Text(
-                    "Watch cool videos!",
+                    "Watch cool travel videos!",
                     style: TextStyle(
                       fontSize: Sizes.size40,
                       fontWeight: FontWeight.bold,
@@ -76,7 +86,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 children: [
                   Gaps.v80,
                   Text(
-                    "Follow the rules",
+                    "Share the information",
                     style: TextStyle(
                       fontSize: Sizes.size40,
                       fontWeight: FontWeight.bold,
@@ -84,7 +94,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                   ),
                   Gaps.v16,
                   Text(
-                    "something",
+                    "You can check where did the videos taken",
                     style: TextStyle(
                       fontSize: Sizes.size20,
                     ),
@@ -109,8 +119,8 @@ class _TutorialScreenState extends State<TutorialScreen> {
             opacity: _showingPage == Page.first ? 0 : 1,
             child: CupertinoButton(
               color: Theme.of(context).primaryColor,
+              onPressed: _onEnterAppTap,
               child: const Text("Enter the app!"),
-              onPressed: () {},
             ),
           ),
         )),
