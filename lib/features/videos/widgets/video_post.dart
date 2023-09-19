@@ -130,11 +130,6 @@ class _VideoPostState extends State<VideoPost>
                   ),
           ),
           Positioned.fill(
-            child: GestureDetector(
-              onTap: _onTogglePause,
-            ),
-          ),
-          Positioned.fill(
             child: IgnorePointer(
               child: Center(
                 child: AnimatedBuilder(
@@ -156,6 +151,20 @@ class _VideoPostState extends State<VideoPost>
                   ),
                 ),
               ),
+            ),
+          ),
+          Positioned.fill(
+            child: AnimatedOpacity(
+              opacity: _isMoreTagsShowed ? 0.7 : 0.0,
+              duration: const Duration(milliseconds: 150),
+              child: Container(
+                color: Colors.black,
+              ),
+            ),
+          ),
+          Positioned.fill(
+            child: GestureDetector(
+              onTap: _onTogglePause,
             ),
           ),
           Positioned(
