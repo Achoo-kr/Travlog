@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:marquee/marquee.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+
+const hashTags = [
+  "tag1",
+  "tag2",
+  "tag3",
+  "tag4",
+  "tag5",
+  "tag6",
+  "tag7",
+  "tag8",
+  "tag9",
+];
 
 class VideoPost extends StatefulWidget {
   final Function onVideoFinished;
@@ -29,8 +42,13 @@ class _VideoPostState extends State<VideoPost>
   late final AnimationController _animationController;
 
   bool _isPaused = false;
+  bool _isMoreTagsShowed = false;
+
+  final Iterable<String> _tags = hashTags.map((tag) => "#$tag");
+  late final String _tagString;
 
   void _onVideoChange() {
+    // duration: 영상 길이 == position: 유저가 현재 보고 있는 위치 ? 영상이 끝났다
     if (_videoPlayerController.value.isInitialized) {
       if (_videoPlayerController.value.duration ==
           _videoPlayerController.value.position) {
@@ -48,11 +66,20 @@ class _VideoPostState extends State<VideoPost>
     setState(() {});
   }
 
+  void _onSeeMoreClick() {
+    setState(() {
+      _isMoreTagsShowed = !_isMoreTagsShowed;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
 
     _initVideoPlayer();
+
+    _tagString = _tags.reduce((value, element) => "$value $element");
+    print(_tagString);
 
     _animationController = AnimationController(
       vsync: this,
@@ -131,14 +158,14 @@ class _VideoPostState extends State<VideoPost>
               ),
             ),
           ),
-          const Positioned(
+          Positioned(
             bottom: 20,
             left: 10,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "@니꼬",
+                const Text(
+                  "@CHOO",
                   style: TextStyle(
                     fontSize: Sizes.size20,
                     color: Colors.white,
@@ -146,12 +173,91 @@ class _VideoPostState extends State<VideoPost>
                   ),
                 ),
                 Gaps.v10,
-                Text(
-                  "Is it good enough?",
-                  style: TextStyle(
-                    fontSize: Sizes.size16,
-                    color: Colors.white,
+                const SizedBox(
+                  width: 300,
+                  child: Text(
+                    "Is it good enough?",
+                    style: TextStyle(
+                      fontSize: Sizes.size16,
+                      color: Colors.white,
+                    ),
                   ),
+                ),
+                Gaps.v10,
+                SizedBox(
+                  width: 300,
+                  child: _isMoreTagsShowed
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              _tagString,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: Sizes.size16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: _onSeeMoreClick,
+                              child: const Text(
+                                "Close",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: Sizes.size16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      : Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                _tagString,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: Sizes.size16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: _onSeeMoreClick,
+                              child: const Text(
+                                "See more",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: Sizes.size16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                ),
+                Gaps.v10,
+                Row(
+                  children: [
+                    const FaIcon(
+                      FontAwesomeIcons.music,
+                      size: 16,
+                      color: Colors.white,
+                    ),
+                    Gaps.h8,
+                    SizedBox(
+                      width: 300,
+                      height: 16,
+                      child: Marquee(
+                          text: "CHOO - Flutter is super cool" " ",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: Sizes.size16,
+                          )),
+                    )
+                  ],
                 )
               ],
             ),
