@@ -123,7 +123,9 @@ class _VideoPostState extends State<VideoPost>
     }
     await showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.transparent,
+      //바텀시트 크기 고정 해제
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent, // 뒤의 scaffold가 보이도록
       builder: (context) => const VideoComments(),
     );
     _onTogglePause();
