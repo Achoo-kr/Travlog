@@ -206,17 +206,6 @@ class _VideoPostState extends State<VideoPost>
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            GestureDetector(
-                              onTap: _onSeeMoreClick,
-                              child: const Text(
-                                "Close",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: Sizes.size16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            )
                           ],
                         )
                       : Row(
