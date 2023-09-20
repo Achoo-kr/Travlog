@@ -79,7 +79,6 @@ class _VideoPostState extends State<VideoPost>
     _initVideoPlayer();
 
     _tagString = _tags.reduce((value, element) => "$value $element");
-    print(_tagString);
 
     _animationController = AnimationController(
       vsync: this,
@@ -164,7 +163,7 @@ class _VideoPostState extends State<VideoPost>
           ),
           Positioned.fill(
             child: GestureDetector(
-              onTap: _onTogglePause,
+              onTap: _isMoreTagsShowed ? _onSeeMoreClick : _onTogglePause,
             ),
           ),
           Positioned(
