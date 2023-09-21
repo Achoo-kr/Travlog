@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone/features/videos/video_timeline_screen.dart';
 
 final tabs = [
   "Top",
@@ -41,8 +43,33 @@ class _DiscoverScreenState extends State<DiscoverScreen>
     }
   }
 
+  // void _onGoBackHistory() {
+  //   //pushReplacement 기존 루트를 버리고 push 시켜줌
+  //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+  //     builder: (context) => const MainNavigationScreen(),
+  //   ));
+  // }
+
+  //PageRouteBuilder를 사용해 페이지 전환 애니메이션을 커스터마이즈
   void _onGoBackHistory() {
-    // Navigator.of(context).pop();
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const MainNavigationScreen(),
+        transitionDuration: const Duration(milliseconds: 150), //애니메이션 속도
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          var begin = const Offset(-1.0, 0.0);
+          var end = Offset.zero;
+          var tween = Tween(begin: begin, end: end);
+          var offsetAnimation = animation.drive(tween);
+
+          return SlideTransition(
+            position: offsetAnimation,
+            child: child,
+          );
+        },
+      ),
+    );
   }
 
   void _hideKeyBoardWhenTapChanged() {
