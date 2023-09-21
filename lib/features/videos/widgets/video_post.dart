@@ -102,6 +102,10 @@ class _VideoPostState extends State<VideoPost>
         !_videoPlayerController.value.isPlaying) {
       _videoPlayerController.play();
     }
+    // 비디오가 재생중이고 비디오 위젯의 가시성이 100%이 아니면 재생을 중지(다른 탭으로 갔을 때 재생 중지)
+    if (_videoPlayerController.value.isPlaying && info.visibleFraction < 1) {
+      _onTogglePause();
+    }
   }
 
   void _onTogglePause() {
