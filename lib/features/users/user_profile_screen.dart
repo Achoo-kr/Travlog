@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/users/widget/persistent_tab_bar.dart';
 import 'package:tiktok_clone/features/users/widget/user_info.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -14,247 +15,246 @@ class UserProfileScreen extends StatefulWidget {
 class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            title: const Text('CHOO'),
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const FaIcon(FontAwesomeIcons.gear),
-              )
-            ],
-          ),
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                const CircleAvatar(
-                  radius: 50,
-                  foregroundColor: Colors.teal,
-                  foregroundImage: NetworkImage(
-                      "https://avatars.githubusercontent.com/u/64416520?v=4"),
-                  child: Text('CHOO'),
-                ),
-                Gaps.v20,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+    return SafeArea(
+      child: DefaultTabController(
+        length: 2,
+        child: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return [
+              SliverAppBar(
+                title: const Text('CHOO'),
+                actions: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: const FaIcon(FontAwesomeIcons.gear),
+                  )
+                ],
+              ),
+              SliverToBoxAdapter(
+                child: Column(
                   children: [
-                    const Text(
-                      "@CHOO",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: Sizes.size16),
+                    const CircleAvatar(
+                      radius: 50,
+                      foregroundColor: Colors.teal,
+                      foregroundImage: NetworkImage(
+                          "https://avatars.githubusercontent.com/u/64416520?v=4"),
+                      child: Text('CHOO'),
                     ),
-                    Gaps.h5,
-                    FaIcon(
-                      FontAwesomeIcons.solidCircleCheck,
-                      size: Sizes.size16,
-                      color: Colors.blue.shade500,
-                    )
-                  ],
-                ),
-                Gaps.v24,
-                SizedBox(
-                  height: Sizes.size48,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const UserInfo(num: '97', type: 'Following'),
-                      VerticalDivider(
-                        width: 30,
-                        thickness: 1,
-                        color: Colors.grey.shade500,
-                        indent: Sizes.size14,
-                        endIndent: Sizes.size14,
-                      ),
-                      const UserInfo(num: "10.5M", type: "Followers"),
-                      VerticalDivider(
-                        width: 30,
-                        thickness: 1,
-                        color: Colors.grey.shade500,
-                        indent: Sizes.size14,
-                        endIndent: Sizes.size14,
-                      ),
-                      const UserInfo(num: "194.3M", type: "Likes")
-                    ],
-                  ),
-                ),
-                Gaps.v14,
-                FractionallySizedBox(
-                  widthFactor: 0.33,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: Sizes.size12,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(Sizes.size4),
-                      ),
-                    ),
-                    child: const Text(
-                      'Follow',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                Gaps.v14,
-                const Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Sizes.size32,
-                  ),
-                  child: Text(
-                    "All highlights and where to watch live matches on FIFA+ I wonder how it would loook",
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Gaps.v14,
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FaIcon(
-                      FontAwesomeIcons.link,
-                      size: Sizes.size12,
-                    ),
-                    Gaps.h4,
-                    Text(
-                      "https://nomadcoders.co",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-                Gaps.v20,
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.symmetric(
-                      horizontal: BorderSide(
-                        color: Colors.grey.shade200,
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  child: const TabBar(
-                    indicatorSize: TabBarIndicatorSize.label,
-                    indicatorColor: Colors.black,
-                    labelColor: Colors.black,
-                    labelPadding: EdgeInsets.symmetric(vertical: Sizes.size10),
-                    tabs: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: Sizes.size20),
-                        child: FaIcon(FontAwesomeIcons.chessBoard),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: Sizes.size20),
-                        child: FaIcon(FontAwesomeIcons.heart),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: TabBarView(
-                    children: [
-                      GridView.builder(
-                        //스크롤 시에 키보드 Dismiss
-                        keyboardDismissBehavior:
-                            ScrollViewKeyboardDismissBehavior.onDrag,
-                        itemCount: 20,
-                        padding: const EdgeInsets.all(
-                          Sizes.size6,
+                    Gaps.v20,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "@CHOO",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: Sizes.size16),
                         ),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: Sizes.size10,
-                          mainAxisSpacing: Sizes.size10,
-                          childAspectRatio: 9 / 18,
-                        ),
-                        itemBuilder: (context, index) => Column(
-                          children: [
-                            Container(
-                              clipBehavior: Clip.hardEdge,
+                        Gaps.h5,
+                        FaIcon(
+                          FontAwesomeIcons.solidCircleCheck,
+                          size: Sizes.size16,
+                          color: Colors.blue.shade500,
+                        )
+                      ],
+                    ),
+                    Gaps.v24,
+                    SizedBox(
+                      height: Sizes.size48,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const UserInfo(num: '97', type: 'Following'),
+                          VerticalDivider(
+                            width: 30,
+                            thickness: 1,
+                            color: Colors.grey.shade500,
+                            indent: Sizes.size14,
+                            endIndent: Sizes.size14,
+                          ),
+                          const UserInfo(num: "10.5M", type: "Followers"),
+                          VerticalDivider(
+                            width: 30,
+                            thickness: 1,
+                            color: Colors.grey.shade500,
+                            indent: Sizes.size14,
+                            endIndent: Sizes.size14,
+                          ),
+                          const UserInfo(num: "194.3M", type: "Likes")
+                        ],
+                      ),
+                    ),
+                    Gaps.v14,
+                    FractionallySizedBox(
+                      widthFactor: 0.66,
+                      child: Row(
+                        children: [
+                          Flexible(
+                            fit: FlexFit.tight,
+                            flex: 4,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: Sizes.size12,
+                              ),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  Sizes.size4,
+                                color: Theme.of(context).primaryColor,
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(Sizes.size4),
                                 ),
                               ),
-                              child: AspectRatio(
-                                aspectRatio: 9 / 13,
-                                child: FadeInImage.assetNetwork(
-                                    placeholderFit: BoxFit.cover,
-                                    fit: BoxFit.cover,
-                                    placeholder:
-                                        "assets/images/placeholder.jpg",
-                                    image:
-                                        "https://media.istockphoto.com/id/944812540/ko/%EC%82%AC%EC%A7%84/%EC%82%B0-%ED%94%84%EB%A6%AC-%ED%8F%B0-%ED%83%80-%EB%8D%B8%EA%B0%80-%EB%8B%A4-%EC%84%AC-%EC%95%84%EC%A1%B0%EB%A0%88%EC%8A%A4-%EC%A0%9C%EB%8F%84.jpg?s=612x612&w=0&k=20&c=DQJ6eA0Wnxqt1yDdJChcoyuJ_5r0IQBduoIFZY0QV78="),
+                              child: const Text(
+                                'Follow',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
-                            Gaps.v10,
-                            const Text(
-                              "This is a very long caption for my tiktok that im upload just now currently.",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: Sizes.size16 + Sizes.size2,
-                                fontWeight: FontWeight.bold,
+                          ),
+                          Gaps.h5,
+                          Flexible(
+                            flex: 1,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: Sizes.size9,
+                                horizontal: Sizes.size11,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey.shade400,
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(Sizes.size4),
+                                ),
+                              ),
+                              child: FaIcon(
+                                FontAwesomeIcons.youtube,
+                                size: Sizes.size20,
+                                color: Colors.grey.shade800,
                               ),
                             ),
-                            Gaps.v8,
-                            DefaultTextStyle(
-                              style: TextStyle(
-                                color: Colors.grey.shade600,
-                                fontWeight: FontWeight.bold,
+                          ),
+                          Gaps.h5,
+                          Flexible(
+                            flex: 1,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: Sizes.size9,
+                                horizontal: Sizes.size11,
                               ),
-                              child: Row(
-                                children: [
-                                  const CircleAvatar(
-                                    radius: 12,
-                                    backgroundColor: Colors.grey,
-                                    backgroundImage: NetworkImage(
-                                        "https://avatars.githubusercontent.com/u/64416520?v=4"),
-                                  ),
-                                  Gaps.h4,
-                                  const Expanded(
-                                    child: Text(
-                                      "FeathersMcGraw",
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                    ),
-                                  ),
-                                  Gaps.h4,
-                                  FaIcon(
-                                    FontAwesomeIcons.heart,
-                                    size: Sizes.size16,
-                                    color: Colors.grey.shade600,
-                                  ),
-                                  Gaps.h2,
-                                  const Text(
-                                    "2.5M",
-                                  )
-                                ],
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey.shade400,
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(Sizes.size4),
+                                ),
                               ),
-                            )
-                          ],
+                              child: FaIcon(
+                                FontAwesomeIcons.caretDown,
+                                size: Sizes.size20,
+                                color: Colors.grey.shade800,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Gaps.v14,
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Sizes.size32,
+                      ),
+                      child: Text(
+                        "All highlights and where to watch live matches on FIFA+ I wonder how it would loook",
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Gaps.v14,
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FaIcon(
+                          FontAwesomeIcons.link,
+                          size: Sizes.size12,
                         ),
-                      ),
-                      const Center(
-                        child: Text("d"),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
+                        Gaps.h4,
+                        Text(
+                          "https://nomadcoders.co",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Gaps.v20,
+                  ],
+                ),
+              ),
+              SliverPersistentHeader(
+                delegate: PersistentTabBar(),
+                pinned: true,
+              ),
+            ];
+          },
+          body: TabBarView(
+            children: [
+              GridView.builder(
+                itemCount: 20,
+                padding: EdgeInsets.zero,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: Sizes.size2,
+                  mainAxisSpacing: Sizes.size2,
+                  childAspectRatio: 9 / 14,
+                ),
+                itemBuilder: (context, index) => Column(
+                  children: [
+                    Stack(
+                      children: [
+                        AspectRatio(
+                          aspectRatio: 9 / 14,
+                          child: FadeInImage.assetNetwork(
+                            fit: BoxFit.cover,
+                            placeholder: "assets/images/placeholder.jpg",
+                            image:
+                                "https://images.unsplash.com/photo-1673844969019-c99b0c933e90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80",
+                          ),
+                        ),
+                        const Positioned(
+                          left: 3,
+                          bottom: 3,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              FaIcon(
+                                FontAwesomeIcons.circlePlay,
+                                size: Sizes.size16,
+                                color: Colors.white,
+                              ),
+                              Gaps.h4,
+                              Text(
+                                '4.1M',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const Center(
+                child: Text("d"),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
