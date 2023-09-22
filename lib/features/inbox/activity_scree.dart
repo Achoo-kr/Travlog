@@ -100,6 +100,11 @@ class _ActivityScreenState extends State<ActivityScreen>
             ],
           ),
         ),
+        actions: const [
+          SizedBox(
+            width: 60,
+          ),
+        ],
       ),
       body: Stack(
         children: [
