@@ -34,13 +34,11 @@ class SignUpScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Gaps.v80,
-                  Text(
-                    'Sign up to Travelog',
-                    style: GoogleFonts.abrilFatface(
-                      textStyle: const TextStyle(
-                        fontSize: Sizes.size24,
-                        fontWeight: FontWeight.w700,
-                      ),
+                  const Text(
+                    "Sign up for Travelog",
+                    style: TextStyle(
+                      fontSize: Sizes.size24,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                   Gaps.v20,
