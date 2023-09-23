@@ -23,7 +23,6 @@ class UserInfo extends StatelessWidget {
             fontSize: Sizes.size18,
           ),
         ),
-        Gaps.v5,
         Text(
           type,
           style: TextStyle(color: Colors.grey.shade500),

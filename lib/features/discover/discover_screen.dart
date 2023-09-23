@@ -6,6 +6,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
 import 'package:tiktok_clone/features/videos/video_timeline_screen.dart';
+import 'package:tiktok_clone/utils.dart';
 
 final tabs = [
   "Top",
@@ -146,6 +147,10 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                       width: width,
                       height: Sizes.size48,
                       child: TextField(
+                        style: TextStyle(
+                            color: isDarkMode(context)
+                                ? Colors.white
+                                : Colors.black),
                         autocorrect: false,
                         onSubmitted: _onSearchSubmitted,
                         onChanged: _onSearchChanged,
@@ -158,7 +163,9 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                             borderSide: BorderSide.none,
                           ),
                           filled: true,
-                          fillColor: Colors.grey.shade100,
+                          fillColor: isDarkMode(context)
+                              ? Colors.grey.shade800
+                              : Colors.grey.shade100,
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: Sizes.size10,
                             vertical: Sizes.size10,
@@ -201,8 +208,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
               fontWeight: FontWeight.w600,
               fontSize: Sizes.size16,
             ),
-            indicatorColor: Colors.black,
-            labelColor: Colors.black,
+            indicatorColor: Theme.of(context).tabBarTheme.indicatorColor,
             unselectedLabelColor: Colors.grey.shade500,
             tabs: [
               for (var tab in tabs)
@@ -267,42 +273,44 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                         ),
                       ),
                       Gaps.v8,
-                      if (constraints.maxWidth < 200 ||
-                          constraints.maxWidth > 250)
-                        DefaultTextStyle(
-                          style: TextStyle(
-                            color: Colors.grey.shade600,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          child: Row(
-                            children: [
-                              const CircleAvatar(
-                                radius: 12,
-                                backgroundColor: Colors.grey,
-                                backgroundImage: NetworkImage(
-                                    "https://avatars.githubusercontent.com/u/64416520?v=4"),
+                      // if (constraints.maxWidth < 200 ||
+                      //     constraints.maxWidth > 250)
+                      DefaultTextStyle(
+                        style: TextStyle(
+                          color: isDarkMode(context)
+                              ? Colors.grey.shade300
+                              : Colors.grey.shade600,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        child: Row(
+                          children: [
+                            const CircleAvatar(
+                              radius: 12,
+                              backgroundColor: Colors.grey,
+                              backgroundImage: NetworkImage(
+                                  "https://avatars.githubusercontent.com/u/64416520?v=4"),
+                            ),
+                            Gaps.h4,
+                            const Expanded(
+                              child: Text(
+                                "FeathersMcGraw",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
                               ),
-                              Gaps.h4,
-                              const Expanded(
-                                child: Text(
-                                  "FeathersMcGraw",
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                              ),
-                              Gaps.h4,
-                              FaIcon(
-                                FontAwesomeIcons.heart,
-                                size: Sizes.size16,
-                                color: Colors.grey.shade600,
-                              ),
-                              Gaps.h2,
-                              const Text(
-                                "2.5M",
-                              )
-                            ],
-                          ),
-                        )
+                            ),
+                            Gaps.h4,
+                            FaIcon(
+                              FontAwesomeIcons.heart,
+                              size: Sizes.size16,
+                              color: Colors.grey.shade600,
+                            ),
+                            Gaps.h2,
+                            const Text(
+                              "2.5M",
+                            )
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
