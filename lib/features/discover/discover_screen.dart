@@ -231,71 +231,75 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                   mainAxisSpacing: Sizes.size10,
                   childAspectRatio: 9 / 18,
                 ),
-                itemBuilder: (context, index) => Column(
-                  children: [
-                    Container(
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          Sizes.size4,
+                itemBuilder: (context, index) => LayoutBuilder(
+                  builder: (context, constraints) => Column(
+                    children: [
+                      Container(
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            Sizes.size4,
+                          ),
+                        ),
+                        child: AspectRatio(
+                          aspectRatio: 9 / 13,
+                          child: FadeInImage.assetNetwork(
+                              placeholderFit: BoxFit.cover,
+                              fit: BoxFit.cover,
+                              placeholder: "assets/images/placeholder.jpg",
+                              image:
+                                  "https://media.istockphoto.com/id/944812540/ko/%EC%82%AC%EC%A7%84/%EC%82%B0-%ED%94%84%EB%A6%AC-%ED%8F%B0-%ED%83%80-%EB%8D%B8%EA%B0%80-%EB%8B%A4-%EC%84%AC-%EC%95%84%EC%A1%B0%EB%A0%88%EC%8A%A4-%EC%A0%9C%EB%8F%84.jpg?s=612x612&w=0&k=20&c=DQJ6eA0Wnxqt1yDdJChcoyuJ_5r0IQBduoIFZY0QV78="),
                         ),
                       ),
-                      child: AspectRatio(
-                        aspectRatio: 9 / 13,
-                        child: FadeInImage.assetNetwork(
-                            placeholderFit: BoxFit.cover,
-                            fit: BoxFit.cover,
-                            placeholder: "assets/images/placeholder.jpg",
-                            image:
-                                "https://media.istockphoto.com/id/944812540/ko/%EC%82%AC%EC%A7%84/%EC%82%B0-%ED%94%84%EB%A6%AC-%ED%8F%B0-%ED%83%80-%EB%8D%B8%EA%B0%80-%EB%8B%A4-%EC%84%AC-%EC%95%84%EC%A1%B0%EB%A0%88%EC%8A%A4-%EC%A0%9C%EB%8F%84.jpg?s=612x612&w=0&k=20&c=DQJ6eA0Wnxqt1yDdJChcoyuJ_5r0IQBduoIFZY0QV78="),
+                      Gaps.v10,
+                      const Text(
+                        "This is a very long caption for my tiktok that im upload just now currently.",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: Sizes.size16 + Sizes.size2,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    Gaps.v10,
-                    const Text(
-                      "This is a very long caption for my tiktok that im upload just now currently.",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: Sizes.size16 + Sizes.size2,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Gaps.v8,
-                    DefaultTextStyle(
-                      style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      child: Row(
-                        children: [
-                          const CircleAvatar(
-                            radius: 12,
-                            backgroundColor: Colors.grey,
-                            backgroundImage: NetworkImage(
-                                "https://avatars.githubusercontent.com/u/64416520?v=4"),
-                          ),
-                          Gaps.h4,
-                          const Expanded(
-                            child: Text(
-                              "FeathersMcGraw",
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                          ),
-                          Gaps.h4,
-                          FaIcon(
-                            FontAwesomeIcons.heart,
-                            size: Sizes.size16,
+                      Gaps.v8,
+                      if (constraints.maxWidth < 200 ||
+                          constraints.maxWidth > 250)
+                        DefaultTextStyle(
+                          style: TextStyle(
                             color: Colors.grey.shade600,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Gaps.h2,
-                          const Text(
-                            "2.5M",
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                          child: Row(
+                            children: [
+                              const CircleAvatar(
+                                radius: 12,
+                                backgroundColor: Colors.grey,
+                                backgroundImage: NetworkImage(
+                                    "https://avatars.githubusercontent.com/u/64416520?v=4"),
+                              ),
+                              Gaps.h4,
+                              const Expanded(
+                                child: Text(
+                                  "FeathersMcGraw",
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ),
+                              Gaps.h4,
+                              FaIcon(
+                                FontAwesomeIcons.heart,
+                                size: Sizes.size16,
+                                color: Colors.grey.shade600,
+                              ),
+                              Gaps.h2,
+                              const Text(
+                                "2.5M",
+                              )
+                            ],
+                          ),
+                        )
+                    ],
+                  ),
                 ),
               ),
               for (var tab in tabs.skip(1))
