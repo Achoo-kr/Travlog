@@ -127,62 +127,67 @@ class _DiscoverScreenState extends State<DiscoverScreen>
               horizontal: Sizes.size2,
               vertical: Sizes.size4,
             ),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: _onGoBackHistory,
-                  child: const FaIcon(
-                    FontAwesomeIcons.chevronLeft,
-                    size: Sizes.size24,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: Breakpoints.sm,
+              ),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: _onGoBackHistory,
+                    child: const FaIcon(
+                      FontAwesomeIcons.chevronLeft,
+                      size: Sizes.size24,
+                    ),
                   ),
-                ),
-                Gaps.h10,
-                Expanded(
-                  child: SizedBox(
-                    width: width,
-                    height: Sizes.size48,
-                    child: TextField(
-                      autocorrect: false,
-                      onSubmitted: _onSearchSubmitted,
-                      onChanged: _onSearchChanged,
-                      focusNode: _focusNode,
-                      controller: _textEditingController,
-                      cursorColor: Theme.of(context).primaryColor,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(Sizes.size10),
-                          borderSide: BorderSide.none,
+                  Gaps.h10,
+                  Expanded(
+                    child: SizedBox(
+                      width: width,
+                      height: Sizes.size48,
+                      child: TextField(
+                        autocorrect: false,
+                        onSubmitted: _onSearchSubmitted,
+                        onChanged: _onSearchChanged,
+                        focusNode: _focusNode,
+                        controller: _textEditingController,
+                        cursorColor: Theme.of(context).primaryColor,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(Sizes.size10),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey.shade100,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: Sizes.size10,
+                            vertical: Sizes.size10,
+                          ),
+                          suffixIconConstraints: const BoxConstraints(
+                            minWidth: 40,
+                            minHeight: 10,
+                          ),
+                          suffixIcon: _focusNode.hasFocus
+                              ? GestureDetector(
+                                  onTap: _onTapXmark,
+                                  child: const FaIcon(
+                                    FontAwesomeIcons.solidCircleXmark,
+                                    color: Colors.grey,
+                                    size: Sizes.size24,
+                                  ),
+                                )
+                              : null,
                         ),
-                        filled: true,
-                        fillColor: Colors.grey.shade100,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: Sizes.size10,
-                          vertical: Sizes.size10,
-                        ),
-                        suffixIconConstraints: const BoxConstraints(
-                          minWidth: 40,
-                          minHeight: 10,
-                        ),
-                        suffixIcon: _focusNode.hasFocus
-                            ? GestureDetector(
-                                onTap: _onTapXmark,
-                                child: const FaIcon(
-                                  FontAwesomeIcons.solidCircleXmark,
-                                  color: Colors.grey,
-                                  size: Sizes.size24,
-                                ),
-                              )
-                            : null,
                       ),
                     ),
                   ),
-                ),
-                Gaps.h10,
-                const FaIcon(
-                  FontAwesomeIcons.sliders,
-                  size: Sizes.size24,
-                )
-              ],
+                  Gaps.h10,
+                  const FaIcon(
+                    FontAwesomeIcons.sliders,
+                    size: Sizes.size24,
+                  )
+                ],
+              ),
             ),
           ),
           bottom: TabBar(
