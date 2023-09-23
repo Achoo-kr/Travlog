@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:marquee/marquee.dart';
@@ -44,6 +45,7 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isPaused = false;
   bool _isMoreTagsShowed = false;
+  bool _isVolumeOn = true;
 
   final Iterable<String> _tags = hashTags.map((tag) => "#$tag");
   late final String _tagString;
@@ -63,6 +65,10 @@ class _VideoPostState extends State<VideoPost>
         VideoPlayerController.asset("assets/videos/video.mp4");
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
+    if (kIsWeb) {
+      await _videoPlayerController.setVolume(0);
+      _isVolumeOn = false;
+    }
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
   }
@@ -133,6 +139,17 @@ class _VideoPostState extends State<VideoPost>
       builder: (context) => const VideoComments(),
     );
     _onTogglePause();
+  }
+
+  void _tapVolumeButton() async {
+    if (_isVolumeOn) {
+      await _videoPlayerController.setVolume(0);
+    } else {
+      await _videoPlayerController.setVolume(1);
+    }
+    setState(() {
+      _isVolumeOn = !_isVolumeOn;
+    });
   }
 
   @override
@@ -285,6 +302,15 @@ class _VideoPostState extends State<VideoPost>
             right: 10,
             child: Column(
               children: [
+                GestureDetector(
+                  onTap: _tapVolumeButton,
+                  child: VideoButton(
+                    icon: _isVolumeOn
+                        ? FontAwesomeIcons.volumeHigh
+                        : FontAwesomeIcons.volumeXmark,
+                    text: "",
+                  ),
+                ),
                 const CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,
