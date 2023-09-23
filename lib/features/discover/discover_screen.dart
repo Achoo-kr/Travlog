@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/breakpoints.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
@@ -108,8 +109,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
+    final width = MediaQuery.of(context).size.width;
     //No tap controller 문제 => DefaultTabController
     return DefaultTabController(
       length: tabs.length,
@@ -139,7 +139,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                 Gaps.h10,
                 Expanded(
                   child: SizedBox(
-                    width: size.width,
+                    width: width,
                     height: Sizes.size48,
                     child: TextField(
                       autocorrect: false,
@@ -225,8 +225,8 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                 padding: const EdgeInsets.all(
                   Sizes.size6,
                 ),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: width > Breakpoints.lg ? 5 : 2,
                   crossAxisSpacing: Sizes.size10,
                   mainAxisSpacing: Sizes.size10,
                   childAspectRatio: 9 / 18,
