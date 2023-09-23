@@ -130,6 +130,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   message: const Text("Please dooooont gooooo"),
                   actions: [
                     CupertinoActionSheetAction(
+                      //글자가 볼드체가 되는 설정
                       isDefaultAction: true,
                       onPressed: () => Navigator.of(context).pop(),
                       child: const Text("Not log out"),
