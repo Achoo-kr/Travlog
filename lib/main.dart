@@ -3,7 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/widgets/email_screen.dart';
+import 'package:tiktok_clone/features/authentication/widgets/login_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/sign_up_screen.dart';
+import 'package:tiktok_clone/features/authentication/widgets/username_screen.dart';
 import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
 import 'package:tiktok_clone/features/settings/settings_screen.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
@@ -105,7 +108,13 @@ class TikTokApp extends StatelessWidget {
         ),
         primaryColor: const Color(0xFFE9435A),
       ),
-      home: const SignUpScreen(),
+      initialRoute: SignUpScreen.routeName,
+      routes: {
+        SignUpScreen.routeName: (context) => const SignUpScreen(),
+        UsernameScreen.routeName: (context) => const UsernameScreen(),
+        LoginScreen.routeName: (context) => const LoginScreen(),
+        EmailScreen.routeName: (context) => const EmailScreen()
+      },
     );
   }
 }
