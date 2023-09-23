@@ -4,5 +4,8 @@
     "emailPasswordButton": "이메일로 로그인하기",
     "appleButton": "애플 로그인하기",
     "alreadyHaveAnAccount": "이미 계정이 있나요?",
-    "logIn": "로그인하기"
+    "logIn": "로그인하기",
+    "likeCount": "{count}",
+    "commentCount": "{count}",
+    "commentTitle": "{value} {value2, plural, =1{comment} other{comments}}"
   }
