@@ -33,12 +33,9 @@ class SignUpScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Gaps.v80,
-                  const Text(
-                    'Sign up for Travelog',
-                    style: TextStyle(
-                      fontSize: Sizes.size24,
-                      fontWeight: FontWeight.w700,
-                    ),
+                  Text(
+                    'Sign up to Travelog',
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   Gaps.v20,
                   const Opacity(
