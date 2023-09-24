@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
@@ -14,12 +15,12 @@ class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
-    final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
-    print(result);
+    context.push(LoginScreen.routeName);
+    //go는 뒤로가기 지원하지 않음(Stack과 전혀 상관 없이 보내버림)
   }
 
   void _onEmailTap(BuildContext context) {
-    Navigator.of(context).pushNamed(UsernameScreen.routeName);
+    context.push(UsernameScreen.routeName);
     // Navigator.of(context).push(
     //   PageRouteBuilder(
     //       transitionDuration: const Duration(seconds: 1),

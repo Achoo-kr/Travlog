@@ -10,6 +10,7 @@ import 'package:tiktok_clone/features/authentication/widgets/username_screen.dar
 import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
 import 'package:tiktok_clone/features/settings/settings_screen.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
+import 'package:tiktok_clone/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +31,8 @@ class TikTokApp extends StatelessWidget {
   Widget build(BuildContext context) {
     //폰 설정 안 바꾸고 Locale확인하는 법
     // S.load(const Locale('ko'));
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
       title: 'TikTok Clone',
       localizationsDelegates: const [
@@ -108,13 +110,6 @@ class TikTokApp extends StatelessWidget {
         ),
         primaryColor: const Color(0xFFE9435A),
       ),
-      initialRoute: SignUpScreen.routeName,
-      routes: {
-        SignUpScreen.routeName: (context) => const SignUpScreen(),
-        UsernameScreen.routeName: (context) => const UsernameScreen(),
-        LoginScreen.routeName: (context) => const LoginScreen(),
-        EmailScreen.routeName: (context) => const EmailScreen()
-      },
     );
   }
 }
