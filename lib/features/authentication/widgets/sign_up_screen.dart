@@ -20,6 +20,8 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _onEmailTap(BuildContext context) {
+    //query parameter로 특정 url로 보내기
+    // context.push("/users/choo?show=likes");
     context.push(UsernameScreen.routeName);
     // Navigator.of(context).push(
     //   PageRouteBuilder(
