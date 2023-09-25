@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tiktok_clone/common/widgets/main_navigation/main_navigation_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/email_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/login_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/sign_up_screen.dart';
@@ -24,6 +25,15 @@ final router = GoRouter(
       name: InterestsScreen.routeName,
       path: InterestsScreen.routeURL,
       builder: (context, state) => const InterestsScreen(),
+    ),
+    GoRoute(
+      //네 가지 중에 하나만 해당될때만 네비게이트
+      path: "/:tab(home|discover|inbox|profile)",
+      name: MainNavigationScreen.routeName,
+      builder: (context, state) {
+        final tab = state.params["tab"]!;
+        return MainNavigationScreen(tab: tab);
+      },
     )
   ],
 );

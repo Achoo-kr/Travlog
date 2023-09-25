@@ -54,24 +54,24 @@ class _DiscoverScreenState extends State<DiscoverScreen>
 
   //PageRouteBuilder를 사용해 페이지 전환 애니메이션을 커스터마이즈
   void _onGoBackHistory() {
-    Navigator.of(context).pushReplacement(
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const MainNavigationScreen(),
-        transitionDuration: const Duration(milliseconds: 150), //애니메이션 속도
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          var begin = const Offset(-1.0, 0.0);
-          var end = Offset.zero;
-          var tween = Tween(begin: begin, end: end);
-          var offsetAnimation = animation.drive(tween);
+    // Navigator.of(context).pushReplacement(
+    //   PageRouteBuilder(
+    //     pageBuilder: (context, animation, secondaryAnimation) =>
+    //         const MainNavigationScreen(),
+    //     transitionDuration: const Duration(milliseconds: 150), //애니메이션 속도
+    //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    //       var begin = const Offset(-1.0, 0.0);
+    //       var end = Offset.zero;
+    //       var tween = Tween(begin: begin, end: end);
+    //       var offsetAnimation = animation.drive(tween);
 
-          return SlideTransition(
-            position: offsetAnimation,
-            child: child,
-          );
-        },
-      ),
-    );
+    //       return SlideTransition(
+    //         position: offsetAnimation,
+    //         child: child,
+    //       );
+    //     },
+    //   ),
+    // );
   }
 
   void _hideKeyBoardWhenTapChanged() {
