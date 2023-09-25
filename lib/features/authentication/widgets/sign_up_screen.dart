@@ -16,14 +16,20 @@ class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
-    context.push(LoginScreen.routeName);
+    context.pushNamed(LoginScreen.routeName);
     //go는 뒤로가기 지원하지 않음(Stack과 전혀 상관 없이 보내버림)
   }
 
   void _onEmailTap(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const UsernameScreen(),
+      ),
+    );
     //query parameter로 특정 url로 보내기
     // context.push("/users/choo?show=likes");
-    context.pushNamed(UsernameScreen.routeName);
+    // context.pushNamed(UsernameScreen.routeName);
     // Navigator.of(context).push(
     //   PageRouteBuilder(
     //       transitionDuration: const Duration(seconds: 1),
