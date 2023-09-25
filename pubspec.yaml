@@ -56,6 +56,10 @@ dependencies:
 
   permission_handler: ^11.0.0
 
+  gallery_saver: 2.3.2
+
+  image_picker: 0.8.6+1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
