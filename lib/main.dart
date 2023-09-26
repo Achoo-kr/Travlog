@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/widgets/main_navigation/widgets/video_config/video_config.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/widgets/email_screen.dart';
@@ -32,10 +33,13 @@ class TikTokApp extends StatelessWidget {
   Widget build(BuildContext context) {
     //폰 설정 안 바꾸고 Locale확인하는 법
     // S.load(const Locale('ko'));
-    return ValueListenableBuilder(
-      valueListenable: darkModeConfig,
-      builder: (BuildContext context, value, Widget? child) =>
-          MaterialApp.router(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => VideoConfig(),
+        ),
+      ],
+      child: MaterialApp.router(
         routerConfig: router,
         debugShowCheckedModeBanner: false,
         title: 'TikTok Clone',
@@ -49,7 +53,7 @@ class TikTokApp extends StatelessWidget {
           Locale('en'),
           Locale('ko'),
         ],
-        themeMode: darkModeConfig.value ? ThemeMode.dark : ThemeMode.light,
+        themeMode: ThemeMode.system,
         theme: ThemeData(
           useMaterial3: true,
           textTheme: Typography.blackMountainView,

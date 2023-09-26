@@ -304,8 +304,10 @@ class _VideoPostState extends State<VideoPost>
             child: Column(
               children: [
                 GestureDetector(
+                  //context.read<VideoConfig>().toggleIsMuted();
                   onTap: _tapVolumeButton,
                   child: VideoButton(
+                    //VideoConfig Provider 불러오는 법context.watch<VideoConfig>().isMuted ?
                     icon: _isVolumeOn
                         ? FontAwesomeIcons.volumeHigh
                         : FontAwesomeIcons.volumeXmark,
