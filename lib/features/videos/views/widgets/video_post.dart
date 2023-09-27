@@ -48,7 +48,7 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isPaused = false;
   bool _isMoreTagsShowed = false;
-  final bool _isMuted = false;
+  late bool _isMuted = context.read<PlaybackConfigViewModel>().muted;
 
   final Iterable<String> _tags = hashTags.map((tag) => "#$tag");
   late final String _tagString;
@@ -68,7 +68,7 @@ class _VideoPostState extends State<VideoPost>
         VideoPlayerController.asset("assets/videos/video.mp4");
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
-    if (kIsWeb) {
+    if (kIsWeb || _isMuted) {
       await _videoPlayerController.setVolume(0);
     }
     _videoPlayerController.addListener(_onVideoChange);
@@ -111,11 +111,13 @@ class _VideoPostState extends State<VideoPost>
   void _onPlaybackConfigChanged() {
     if (!mounted) return;
     final muted = context.read<PlaybackConfigViewModel>().muted;
+    _isMuted = muted;
     if (muted) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(1);
     }
+    setState(() {});
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
@@ -208,15 +210,20 @@ class _VideoPostState extends State<VideoPost>
             top: 40,
             child: IconButton(
               icon: FaIcon(
-                context.watch<PlaybackConfigViewModel>().muted
+                _isMuted
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
               ),
               onPressed: () {
-                context
-                    .read<PlaybackConfigViewModel>()
-                    .setMuted(!context.read<PlaybackConfigViewModel>().muted);
+                _isMuted = !_isMuted;
+                if (_isMuted) {
+                  _videoPlayerController.setVolume(0);
+                } else {
+                  _videoPlayerController.setVolume(1);
+                }
+
+                setState(() {});
               },
             ),
           ),
