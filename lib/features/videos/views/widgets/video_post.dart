@@ -2,10 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:marquee/marquee.dart';
+import 'package:provider/provider.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/%08views/widgets/video_button.dart';
 import 'package:tiktok_clone/features/videos/%08views/widgets/video_comments.dart';
+import 'package:tiktok_clone/features/videos/view_models/playback_config_viewmodel.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -46,7 +48,7 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isPaused = false;
   bool _isMoreTagsShowed = false;
-  bool _isVolumeOn = true;
+  final bool _isMuted = false;
 
   final Iterable<String> _tags = hashTags.map((tag) => "#$tag");
   late final String _tagString;
@@ -68,7 +70,6 @@ class _VideoPostState extends State<VideoPost>
     await _videoPlayerController.setLooping(true);
     if (kIsWeb) {
       await _videoPlayerController.setVolume(0);
-      _isVolumeOn = false;
     }
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
@@ -95,6 +96,10 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
+
+    context
+        .read<PlaybackConfigViewModel>()
+        .addListener(_onPlaybackConfigChanged);
   }
 
   @override
@@ -103,11 +108,24 @@ class _VideoPostState extends State<VideoPost>
     super.dispose();
   }
 
+  void _onPlaybackConfigChanged() {
+    if (!mounted) return;
+    final muted = context.read<PlaybackConfigViewModel>().muted;
+    if (muted) {
+      _videoPlayerController.setVolume(0);
+    } else {
+      _videoPlayerController.setVolume(1);
+    }
+  }
+
   void _onVisibilityChanged(VisibilityInfo info) {
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      _videoPlayerController.play();
+      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
+      if (autoplay) {
+        _videoPlayerController.play();
+      }
     }
     // 비디오가 재생중이고 비디오 위젯의 가시성이 100%이 아니면 재생을 중지(다른 탭으로 갔을 때 재생 중지)
     if (_videoPlayerController.value.isPlaying && info.visibleFraction < 1) {
@@ -142,17 +160,6 @@ class _VideoPostState extends State<VideoPost>
     _onTogglePause();
   }
 
-  void _tapVolumeButton() async {
-    if (_isVolumeOn) {
-      await _videoPlayerController.setVolume(0);
-    } else {
-      await _videoPlayerController.setVolume(1);
-    }
-    setState(() {
-      _isVolumeOn = !_isVolumeOn;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
@@ -166,6 +173,11 @@ class _VideoPostState extends State<VideoPost>
                 : Container(
                     color: Colors.black,
                   ),
+          ),
+          Positioned.fill(
+            child: GestureDetector(
+              onTap: _onTogglePause,
+            ),
           ),
           Positioned.fill(
             child: IgnorePointer(
@@ -189,6 +201,23 @@ class _VideoPostState extends State<VideoPost>
                   ),
                 ),
               ),
+            ),
+          ),
+          Positioned(
+            left: 20,
+            top: 40,
+            child: IconButton(
+              icon: FaIcon(
+                context.watch<PlaybackConfigViewModel>().muted
+                    ? FontAwesomeIcons.volumeOff
+                    : FontAwesomeIcons.volumeHigh,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                context
+                    .read<PlaybackConfigViewModel>()
+                    .setMuted(!context.read<PlaybackConfigViewModel>().muted);
+              },
             ),
           ),
           Positioned.fill(
@@ -303,17 +332,6 @@ class _VideoPostState extends State<VideoPost>
             right: 10,
             child: Column(
               children: [
-                GestureDetector(
-                  //context.read<VideoConfig>().toggleIsMuted();
-                  onTap: _tapVolumeButton,
-                  child: VideoButton(
-                    //VideoConfig Provider 불러오는 법context.watch<VideoConfig>().isMuted ?
-                    icon: _isVolumeOn
-                        ? FontAwesomeIcons.volumeHigh
-                        : FontAwesomeIcons.volumeXmark,
-                    text: "",
-                  ),
-                ),
                 const CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,
