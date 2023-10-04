@@ -48,7 +48,6 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isPaused = false;
   bool _isMoreTagsShowed = false;
-  late bool _isMuted = context.read<PlaybackConfigViewModel>().muted;
 
   final Iterable<String> _tags = hashTags.map((tag) => "#$tag");
   late final String _tagString;
@@ -68,7 +67,7 @@ class _VideoPostState extends State<VideoPost>
         VideoPlayerController.asset("assets/videos/video.mp4");
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
-    if (kIsWeb || _isMuted) {
+    if (kIsWeb) {
       await _videoPlayerController.setVolume(0);
     }
     _videoPlayerController.addListener(_onVideoChange);
@@ -96,10 +95,6 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
-
-    context
-        .read<PlaybackConfigViewModel>()
-        .addListener(_onPlaybackConfigChanged);
   }
 
   @override
@@ -110,9 +105,8 @@ class _VideoPostState extends State<VideoPost>
 
   void _onPlaybackConfigChanged() {
     if (!mounted) return;
-    final muted = context.read<PlaybackConfigViewModel>().muted;
-    _isMuted = muted;
-    if (muted) {
+
+    if (false) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(1);
@@ -124,8 +118,7 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
-      if (autoplay) {
+      if (false) {
         _videoPlayerController.play();
       }
     }
@@ -209,15 +202,14 @@ class _VideoPostState extends State<VideoPost>
             left: 20,
             top: 40,
             child: IconButton(
-              icon: FaIcon(
-                _isMuted
+              icon: const FaIcon(
+                false
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
               ),
               onPressed: () {
-                _isMuted = !_isMuted;
-                if (_isMuted) {
+                if (false) {
                   _videoPlayerController.setVolume(0);
                 } else {
                   _videoPlayerController.setVolume(1);
