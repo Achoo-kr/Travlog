@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ const hashTags = [
   "tag9",
 ];
 
-class VideoPost extends StatefulWidget {
+class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinished;
   final int index;
 
@@ -35,10 +36,10 @@ class VideoPost extends StatefulWidget {
   });
 
   @override
-  State<VideoPost> createState() => _VideoPostState();
+  VideoPostState createState() => VideoPostState();
 }
 
-class _VideoPostState extends State<VideoPost>
+class VideoPostState extends ConsumerState<VideoPost>
     with SingleTickerProviderStateMixin {
   late final VideoPlayerController _videoPlayerController;
 
@@ -105,8 +106,9 @@ class _VideoPostState extends State<VideoPost>
 
   void _onPlaybackConfigChanged() {
     if (!mounted) return;
-
-    if (false) {
+    final muted = ref.read(playbackConfigProvider).muted;
+    ref.read(playbackConfigProvider.notifier).setMuted(!muted);
+    if (muted) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(1);
@@ -118,7 +120,7 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      if (false) {
+      if (ref.read(playbackConfigProvider).autoplay) {
         _videoPlayerController.play();
       }
     }
@@ -202,21 +204,13 @@ class _VideoPostState extends State<VideoPost>
             left: 20,
             top: 40,
             child: IconButton(
-              icon: const FaIcon(
-                false
-                    ? FontAwesomeIcons.volumeOff
-                    : FontAwesomeIcons.volumeHigh,
+              icon: FaIcon(
+                ref.watch(playbackConfigProvider).muted
+                    ? FontAwesomeIcons.volumeHigh
+                    : FontAwesomeIcons.volumeOff,
                 color: Colors.white,
               ),
-              onPressed: () {
-                if (false) {
-                  _videoPlayerController.setVolume(0);
-                } else {
-                  _videoPlayerController.setVolume(1);
-                }
-
-                setState(() {});
-              },
+              onPressed: _onPlaybackConfigChanged,
             ),
           ),
           Positioned.fill(
