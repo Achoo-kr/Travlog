@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/view_models/signup_view_model.dart';
 import 'package:tiktok_clone/features/authentication/widgets/birthday_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 
-class PasswordScreen extends StatefulWidget {
+class PasswordScreen extends ConsumerStatefulWidget {
   const PasswordScreen({super.key});
 
   @override
-  State<PasswordScreen> createState() => _UsernameScreenState();
+  ConsumerState<PasswordScreen> createState() => _UsernameScreenState();
 }
 
-class _UsernameScreenState extends State<PasswordScreen> {
+class _UsernameScreenState extends ConsumerState<PasswordScreen> {
   //텍스트 필드에서 동적으로 연결 setState
   final TextEditingController _passwordController = TextEditingController();
 
@@ -48,6 +50,8 @@ class _UsernameScreenState extends State<PasswordScreen> {
 
   void _onSubmit() {
     if (!_isPasswordValid()) return;
+    final state = ref.read(signUpForm.notifier).state;
+    ref.read(signUpForm.notifier).state = {...state, "password": _password};
     Navigator.push(
       context,
       MaterialPageRoute(

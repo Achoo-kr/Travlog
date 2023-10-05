@@ -1,19 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/view_models/signup_view_model.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 import 'package:tiktok_clone/features/onBoarding/interests_screen.dart';
 
-class BirthdayScreen extends StatefulWidget {
+class BirthdayScreen extends ConsumerStatefulWidget {
   const BirthdayScreen({super.key});
 
   @override
-  State<BirthdayScreen> createState() => DateScreenState();
+  ConsumerState<BirthdayScreen> createState() => DateScreenState();
 }
 
-class DateScreenState extends State<BirthdayScreen> {
+class DateScreenState extends ConsumerState<BirthdayScreen> {
   final TextEditingController _birthdayController = TextEditingController();
   DateTime currentDate = DateTime.now();
   //initialDate getter
@@ -34,7 +36,7 @@ class DateScreenState extends State<BirthdayScreen> {
 
   void _onNextTap() {
     //뒤로 못감
-    context.pushReplacementNamed(InterestsScreen.routeName);
+    // context.pushReplacementNamed(InterestsScreen.routeName);
     // Navigator.of(context).pushAndRemoveUntil(
     //   MaterialPageRoute(
     //     builder: (context) => const InterestsScreen(),
