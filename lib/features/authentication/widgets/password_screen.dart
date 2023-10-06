@@ -40,7 +40,7 @@ class _UsernameScreenState extends ConsumerState<PasswordScreen> {
 
   //이메일 정규식
   bool _isPasswordValid() {
-    return _password.isNotEmpty && _password.length > 8;
+    return _password.isNotEmpty && _password.length > 7;
   }
 
   //FocusState -> 키보드 내리는 법

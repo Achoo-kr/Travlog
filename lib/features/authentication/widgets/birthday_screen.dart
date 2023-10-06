@@ -35,6 +35,7 @@ class DateScreenState extends ConsumerState<BirthdayScreen> {
   }
 
   void _onNextTap() {
+    ref.read(signUpProvider.notifier).signUp(context);
     //뒤로 못감
     // context.pushReplacementNamed(InterestsScreen.routeName);
     // Navigator.of(context).pushAndRemoveUntil(
@@ -91,8 +92,8 @@ class DateScreenState extends ConsumerState<BirthdayScreen> {
             Gaps.v16,
             GestureDetector(
               onTap: _onNextTap,
-              child: const FormButton(
-                disabled: false,
+              child: FormButton(
+                disabled: ref.watch(signUpProvider).isLoading,
                 text: 'Next',
               ),
             )
