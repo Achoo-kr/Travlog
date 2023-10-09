@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/features/videos/%08views/widgets/video_post.dart';
-import 'package:tiktok_clone/features/videos/view_models/timeline_view_model.dart';
+import 'package:tiktok_clone/features/videos/view_models/upload_video_view_model.dart';
 
 class VideoTimelineScreen extends ConsumerStatefulWidget {
   const VideoTimelineScreen({super.key});
@@ -53,7 +53,7 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ref.watch(timelineProvider).when(
+    return ref.watch(uploadVideoProvider).when(
         loading: () => const Center(
               child: CircularProgressIndicator(),
             ),
@@ -70,7 +70,7 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
                 controller: _pageController,
                 scrollDirection: Axis.vertical,
                 onPageChanged: _onPageChanged,
-                itemCount: videos.length,
+                // itemCount: videos.length,
                 itemBuilder: (context, index) => VideoPost(
                   onVideoFinished: _onVideoFinished,
                   index: index,
