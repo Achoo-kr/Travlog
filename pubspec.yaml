@@ -69,7 +69,6 @@ dependencies:
   firebase_auth: ^4.10.1
   cloud_firestore: ^4.9.3
   firebase_storage: ^11.2.8
-  cloud_functions: ^4.4.2
 
 
 dev_dependencies:
