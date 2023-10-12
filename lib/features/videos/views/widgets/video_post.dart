@@ -10,6 +10,7 @@ import 'package:tiktok_clone/features/videos/%08views/widgets/video_button.dart'
 import 'package:tiktok_clone/features/videos/%08views/widgets/video_comments.dart';
 import 'package:tiktok_clone/features/videos/models/video_model.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_viewmodel.dart';
+import 'package:tiktok_clone/features/videos/view_models/video_post_view_models.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -52,6 +53,7 @@ class VideoPostState extends ConsumerState<VideoPost>
 
   bool _isPaused = false;
   bool _isMoreTagsShowed = false;
+  int _likes = 0;
 
   final Iterable<String> _tags = hashTags.map((tag) => "#$tag");
   late final String _tagString;
@@ -66,6 +68,23 @@ class VideoPostState extends ConsumerState<VideoPost>
     }
   }
 
+  void _onLikeTap() {
+    ref.read(videoPostProvider(widget.videoData.id).notifier).likeVideo();
+
+    ref.watch(videoPostProvider(widget.videoData.id)).when(
+        data: (isLiked) {
+          if (isLiked) {
+            _likes--;
+          } else {
+            _likes++;
+          }
+
+          setState(() {});
+        },
+        error: (error, stackTrace) => null,
+        loading: () => null);
+  }
+
   void _initVideoPlayer() async {
     _videoPlayerController =
         VideoPlayerController.asset("assets/videos/video.mp4");
@@ -76,6 +95,8 @@ class VideoPostState extends ConsumerState<VideoPost>
     }
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
+
+    _likes = widget.videoData.likes;
   }
 
   void _onSeeMoreClick() {
@@ -338,9 +359,20 @@ class VideoPostState extends ConsumerState<VideoPost>
                   child: Text(widget.videoData.creator),
                 ),
                 Gaps.v24,
-                VideoButton(
-                  icon: FontAwesomeIcons.solidHeart,
-                  text: S.of(context).likeCount(widget.videoData.likes),
+                GestureDetector(
+                  onTap: _onLikeTap,
+                  child: VideoButton(
+                    icon: FontAwesomeIcons.solidHeart,
+                    color:
+                        ref.watch(videoPostProvider(widget.videoData.id)).when(
+                              data: (isLiked) =>
+                                  isLiked ? Colors.red : Colors.white,
+                              error: (error, stackTrace) => Colors.white,
+                              loading: () => Colors.white,
+                            ),
+                    // widget.videoData.likes > 0 ? Colors.red : Colors.white,
+                    text: S.of(context).likeCount(_likes),
+                  ),
                 ),
                 Gaps.v24,
                 GestureDetector(

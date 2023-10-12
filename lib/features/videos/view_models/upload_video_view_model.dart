@@ -35,6 +35,7 @@ class UploadVideoViewModel extends AsyncNotifier<void> {
             // video의 data를 database에 초기화해준다.
             await _repository.saveVideo(
               VideoModel(
+                id: "",
                 title: data["title"],
                 description: data["description"],
                 fileUrl: await task.ref.getDownloadURL(),
