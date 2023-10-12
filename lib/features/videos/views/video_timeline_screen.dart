@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/features/videos/%08views/widgets/video_post.dart';
-import 'package:tiktok_clone/features/videos/view_models/video_timeline_view_model.dart';
+import 'package:tiktok_clone/features/videos/view_models/upload_video_view_model.dart';
 
 class VideoTimelineScreen extends ConsumerStatefulWidget {
   const VideoTimelineScreen({super.key});
@@ -53,36 +53,29 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ref.watch(timelineProvider).when(
-          loading: () => const Center(
-            child: CircularProgressIndicator(),
-          ),
-          error: (error, stackTrace) => Center(
-            child: Text(
-              'Could not load videos: $error',
-              style: const TextStyle(color: Colors.white),
+    return ref.watch(uploadVideoProvider).when(
+        loading: () => const Center(
+              child: CircularProgressIndicator(),
             ),
-          ),
-          data: (videos) => RefreshIndicator(
-            onRefresh: _onRefresh,
-            displacement: 50,
-            edgeOffset: 20,
-            color: Theme.of(context).primaryColor,
-            child: PageView.builder(
-              controller: _pageController,
-              scrollDirection: Axis.vertical,
-              onPageChanged: _onPageChanged,
-              itemCount: videos.length,
-              itemBuilder: (context, index) {
-                final videoData = videos[index];
-                return VideoPost(
+        error: (error, stackTrace) => Center(
+              child: Text('Could not load videos: $error'),
+            ),
+        data: (videos) => RefreshIndicator(
+              onRefresh: _onRefresh,
+              displacement: 50,
+              edgeOffset: 20,
+              color: Theme.of(context).primaryColor,
+              //ListView.builder, PageView.builder은 lazyVStack같이 천천히 렌더링
+              child: PageView.builder(
+                controller: _pageController,
+                scrollDirection: Axis.vertical,
+                onPageChanged: _onPageChanged,
+                // itemCount: videos.length,
+                itemBuilder: (context, index) => VideoPost(
                   onVideoFinished: _onVideoFinished,
                   index: index,
-                  videoData: videoData,
-                );
-              },
-            ),
-          ),
-        );
+                ),
+              ),
+            ));
   }
 }
