@@ -57,6 +57,27 @@ export const onVideoCreated = functions.firestore
       .update({
         likes: admin.firestore.FieldValue.increment(1),
       });
+      const video = await (
+        await db.collection("videos").doc(videoId).get()
+      ).data();
+      if (video) {
+        const creatorUid = video.creatorUid;
+        const user = await (
+          await db.collection("users").doc(creatorUid).get()
+        ).data();
+        if (user) {
+          const token = user.token;
+          await admin.messaging().sendToDevice(token, {
+            data: {
+              screen: "123",
+            },
+            notification: {
+              title: "someone liked you video",
+              body: "Likes + 1 ! Congrats! 💖",
+            },
+          });
+        }
+      }
   });
   
   export const onLikedRemoved = functions.firestore
@@ -70,27 +91,4 @@ export const onVideoCreated = functions.firestore
       .update({
         likes: admin.firestore.FieldValue.increment(-1),
       });
-  });
-
-  export const onChatRoomRemoved = functions.firestore
-  .document("chat_rooms/{chatRoomId}")
-  .onDelete(async (snapshot, context) => {
-    const db = admin.firestore();
-    const [personA, personB] = snapshot.id.split("000");
-
-    const chatRoomId = snapshot.id;
-
-    await db
-      .collection("users")
-      .doc(personA)
-      .collection("myChatRooms")
-      .doc(chatRoomId)
-      .delete();
-
-    await db
-      .collection("users")
-      .doc(personB)
-      .collection("myChatRooms")
-      .doc(chatRoomId)
-      .delete();
   });

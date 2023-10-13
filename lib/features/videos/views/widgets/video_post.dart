@@ -350,13 +350,10 @@ class VideoPostState extends ConsumerState<VideoPost>
             right: 10,
             child: Column(
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
-                  foregroundImage: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/tik-tok-clone-choo.appspot.com/o/avatars%2F${widget.videoData.creatorUid}?alt=media&date=${DateTime.now().toString()}"),
-                  child: Text(widget.videoData.creator),
                 ),
                 Gaps.v24,
                 GestureDetector(
