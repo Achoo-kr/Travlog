@@ -58,16 +58,16 @@ final routerProvider = Provider((ref) {
         builder: (context, state) => const ActivityScreen(),
       ),
       GoRoute(
-        name: ChatsScreen.routeName,
-        path: ChatsScreen.routeURL,
-        builder: (context, state) => const ChatsScreen(),
+        name: ChatScreen.routeName,
+        path: ChatScreen.routeURL,
+        builder: (context, state) => const ChatScreen(),
         routes: [
           GoRoute(
-            name: ChatsDetailScreen.routeName,
-            path: ChatsDetailScreen.routeURL,
+            name: ChatDetailScreen.routeName,
+            path: ChatDetailScreen.routeURL,
             builder: (context, state) {
               final chatId = state.params["chatId"]!;
-              return ChatsDetailScreen(
+              return ChatDetailScreen(
                 chatId: chatId,
               );
             },

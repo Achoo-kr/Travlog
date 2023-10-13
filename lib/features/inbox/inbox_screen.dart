@@ -14,7 +14,7 @@ class InboxScreen extends StatefulWidget {
 
 class _InboxScreenState extends State<InboxScreen> {
   void _onDmPressed() {
-    context.pushNamed(ChatsScreen.routeName);
+    context.pushNamed(ChatScreen.routeName);
   }
 
   void _onActivityTap() {

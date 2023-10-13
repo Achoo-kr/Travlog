@@ -4,16 +4,16 @@ import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/inbox/chat_detail_screen.dart';
 
-class ChatsScreen extends StatefulWidget {
+class ChatScreen extends StatefulWidget {
   static const String routeName = "chats";
   static const String routeURL = "/chats";
-  const ChatsScreen({super.key});
+  const ChatScreen({super.key});
 
   @override
-  State<ChatsScreen> createState() => _ChatsScreenState();
+  State<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _ChatsScreenState extends State<ChatsScreen> {
+class _ChatScreenState extends State<ChatScreen> {
   final GlobalKey<AnimatedListState> _key = GlobalKey<AnimatedListState>();
 //최신 메세지를 아래에서 생성시키기 위해 배열에 저장
   final List<int> _items = [];
@@ -46,7 +46,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
   void _onChatTap(int index) {
     context.pushNamed(
-      ChatsDetailScreen.routeName,
+      ChatDetailScreen.routeName,
       params: {"chatId": "$index"},
     );
   }
